@@ -1,4 +1,4 @@
-const {MongoClient, ObjectId, Collection} = require("mongodb"); 
+const {MongoClient} = require("mongodb"); 
 
 let singleton;
 
@@ -8,11 +8,12 @@ async function connect(){
     const client = new MongoClient(process.env.DB_HOST);
     await client.connect();
 
-    singleton = client.db(process.env.DB_DATABASE);
+    singleton = client.db(process.env.DB);
     return singleton;
 }
 
-let findAll = async (Collection)=>{
+let findAll = async (collection)=>{
+    console.log(collection);
     const db = await connect();
     return await db.collection(collection).find().toArray();
 }
